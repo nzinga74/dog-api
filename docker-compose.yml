@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: dog
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - app-network
+
+  app:
+    image: python:3.9-slim
+    environment:
+      - DATABASE_URL=mysql://root:root@db:3306/dog
+    depends_on:
+      - db
+    networks:
+      - app-network
+    command:
+      [
+        "sh",
+        "-c",
+        "sleep 10 && echo 'Application started, connected to database'",
+      ]
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db_data:
