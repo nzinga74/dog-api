@@ -40,6 +40,7 @@ class CreateDogUseCase {
         status,
       });
     } catch (error) {
+      console.log(error);
       throw new Error(ErrorConstants.CREATE_DOG_ERROR);
     }
   }

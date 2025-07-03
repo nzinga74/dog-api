@@ -13,19 +13,21 @@ class CreateDogController {
       sex,
       status,
       description,
-      photo,
       price,
     } = request.body;
     try {
+      let fileName = request.file?.filename;
+      const photo = fileName == undefined ? "" : fileName;
+
       const dogUseCase = container.resolve(CreateDogUseCase);
       const dog = await dogUseCase.execute({
         name,
-        commercialTypeId,
-        dogSizeId,
-        raceId,
+        commercialTypeId: parseInt(commercialTypeId),
+        dogSizeId: parseInt(dogSizeId),
+        raceId: parseInt(raceId),
         birthDate,
         sex,
-        status,
+        status: parseInt(status),
         description,
         photo,
         price,
