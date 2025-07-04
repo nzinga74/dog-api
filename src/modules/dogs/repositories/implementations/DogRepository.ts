@@ -3,8 +3,40 @@ import { Dog } from "@modules/dogs/models/Dog";
 import { IDogRepository } from "../IDogRepository";
 import { prismaClient } from "database";
 import { IListDog } from "@modules/dogs/dtos/IListDog";
+import { IUpdateDog } from "@modules/dogs/dtos/IUpdateDog";
 
 class DogRepository implements IDogRepository {
+  async updateDog(data: IUpdateDog): Promise<Dog> {
+    const {
+      id,
+      name,
+      commercialTypeId,
+      dogSizeId,
+      raceId,
+      birthDate,
+      sex,
+      status,
+      description,
+      photo,
+      price,
+    } = data;
+
+    return await prismaClient.dog.update({
+      where: { id },
+      data: {
+        name,
+        commercialTypeId,
+        dogSizeId,
+        raceId,
+        birthDate,
+        sex,
+        status,
+        description,
+        photo,
+        price,
+      },
+    });
+  }
   findById(id: number): Promise<Dog | null> {
     return prismaClient.dog.findUnique({
       where: { id },
