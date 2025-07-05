@@ -11,6 +11,6 @@ app.use("/static", express.static(__dirname + "/tmp"));
 app.use(cors({ origin: ["http://localhost:3000", "http://127.0.0.1:3000"] }));
 app.use("/api-docs", SwaggerUi.serve, SwaggerUi.setup(swaggerFile));
 app.use(routes);
-app.listen(3333, () => {
-  console.log("Server started");
+app.listen(3333, "0.0.0.0", () => {
+  console.log("Server started on port 3333");
 });

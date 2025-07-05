@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "start": "yarn dev",
     "dev": "ts-node-dev -r tsconfig-paths/register --inspect --ignore-watch node_modules --transpile-only --respawn src/server.ts",
     "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli",
     "test": "jest"
