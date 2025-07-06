@@ -1,14 +1,15 @@
-FROM node:20-alpine
-
+FROM node:lts-alpine
+ENV NODE_ENV=production
 WORKDIR /usr/src/app
 
 COPY package.json yarn.lock ./
-RUN yarn install
+RUN yarn install --production --frozen-lockfile
 
 COPY . .
 
-RUN npx prisma generate
+EXPOSE 3000
 
-EXPOSE 3333
+RUN chown -R node /usr/src/app
+USER node
 
-CMD ["yarn", "dev"]
+CMD ["yarn", "start"]
