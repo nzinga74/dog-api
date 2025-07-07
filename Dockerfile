@@ -1,15 +1,15 @@
-FROM node:lts-alpine
-ENV NODE_ENV=production
-WORKDIR /usr/src/app
+  FROM node:lts-alpine
+  ENV NODE_ENV=production
+  WORKDIR /usr/src/app
 
-COPY package.json yarn.lock ./
-RUN yarn install --production --frozen-lockfile
+  COPY package.json yarn.lock ./
+  RUN yarn install --production --frozen-lockfile
 
-COPY . .
+  COPY . .
 
-EXPOSE 3000
+  EXPOSE 3000
 
-RUN chown -R node /usr/src/app
-USER node
+  RUN chown -R node /usr/src/app
+  USER node
 
-CMD ["yarn", "start"]
+  CMD ["yarn", "start"]
