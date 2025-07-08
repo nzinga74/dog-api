@@ -1,56 +1,85 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "description": "This is API Docs",
-    "title": "Rentx Documentation",
-    "version": "1.0.0",
+    "description": "API Docs for your project",
+    "title": "Dogs, Auth, and Sells API Documentation",
+    "version": "1.0.1",
     "contact": {
       "email": "nzingaenoque@gmail.com"
     }
   },
   "paths": {
-    "/categories": {
+    "/dogs": {
       "post": {
-        "tags": ["Category"],
-        "summary": "Create Categories",
-        "description": "Create a new Category",
+        "tags": ["Dogs"],
+        "summary": "Create Dog",
+        "description": "Creates a new dog with optional image upload",
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  }
-                },
-                "example": {
-                  "name": "category name example",
-                  "description": "Category description example"
+                  "name": { "type": "string" },
+                  "commercialTypeId": { "type": "integer" },
+                  "dogSizeId": { "type": "integer" },
+                  "raceId": { "type": "integer" },
+                  "birthDate": { "type": "string", "format": "date" },
+                  "sex": { "type": "string", "enum": ["M", "F"] },
+                  "status": { "type": "integer" },
+                  "description": { "type": "string" },
+                  "price": { "type": "number" },
+                  "image": { "type": "string", "format": "binary" }
                 }
               }
             }
           }
         },
         "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "505": {
-            "description": "Categories already exist"
-          }
+          "200": { "description": "Dog created successfully" },
+          "400": { "description": "Validation error or bad request" }
         }
       },
+      "put": {
+        "tags": ["Dogs"],
+        "summary": "Update Dog",
+        "description": "Updates an existing dog with optional image upload",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "integer" },
+                  "name": { "type": "string" },
+                  "commercialTypeId": { "type": "integer" },
+                  "dogSizeId": { "type": "integer" },
+                  "raceId": { "type": "integer" },
+                  "birthDate": { "type": "string", "format": "date" },
+                  "sex": { "type": "string", "enum": ["M", "F"] },
+                  "status": { "type": "integer" },
+                  "description": { "type": "string" },
+                  "price": { "type": "number" },
+                  "image": { "type": "string", "format": "binary" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Dog updated successfully" },
+          "400": { "description": "Validation error or bad request" }
+        }
+      }
+    },
+    "/dogs/list": {
       "get": {
-        "tags": ["Category"],
-        "summary": "List Categories",
-        "description": "List all Categories",
+        "tags": ["Dogs"],
+        "summary": "List Dogs",
+        "description": "Retrieve a list of all registered dogs",
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "A list of dogs",
             "content": {
               "application/json": {
                 "schema": {
@@ -58,16 +87,10 @@
                   "items": {
                     "type": "object",
                     "properties": {
-                      "name": {
-                        "type": "string"
-                      },
-                      "description": {
-                        "type": "string"
-                      }
-                    },
-                    "example": {
-                      "name": "Specification name example",
-                      "description": "Specification description example"
+                      "id": { "type": "integer" },
+                      "name": { "type": "string" },
+                      "description": { "type": "string" },
+                      "price": { "type": "number" }
                     }
                   }
                 }
@@ -77,34 +100,123 @@
         }
       }
     },
-    "/specifications": {
+    "/dogs/{id}": {
+      "delete": {
+        "tags": ["Dogs"],
+        "summary": "Delete Dog",
+        "description": "Deletes a dog by its ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Dog deleted successfully" },
+          "404": { "description": "Dog not found" }
+        }
+      }
+    },
+    "/auth/user": {
       "post": {
-        "tags": ["Specifications"],
-        "summary": "Create Specification",
-        "description": "Create a new Specification",
+        "tags": ["Auth"],
+        "summary": "Authenticate User",
+        "description": "Authenticate a user with email and password",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  }
+                  "email": { "type": "string", "format": "email" },
+                  "password": { "type": "string", "format": "password" }
                 }
               }
             }
           }
         },
         "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "505": {
-            "description": "Specification already exists"
+          "200": { "description": "Authentication successful" },
+          "401": { "description": "Unauthorized" }
+        }
+      }
+    },
+    "/auth/client": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Authenticate Client",
+        "description": "Authenticate a client with email and password",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string", "format": "email" },
+                  "password": { "type": "string", "format": "password" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Authentication successful" },
+          "401": { "description": "Unauthorized" }
+        }
+      }
+    },
+    "/sells": {
+      "post": {
+        "tags": ["Sells"],
+        "summary": "Create Sell",
+        "description": "Creates a new sell record",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "dogId": { "type": "integer" },
+                  "clientId": { "type": "integer" },
+                  "price": { "type": "number" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Sell created successfully" },
+          "400": { "description": "Validation error or bad request" }
+        }
+      }
+    },
+    "/sells/list": {
+      "get": {
+        "tags": ["Sells"],
+        "summary": "List Sells",
+        "description": "Retrieve a list of all sells",
+        "responses": {
+          "200": {
+            "description": "A list of sells",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": { "type": "integer" },
+                      "dogId": { "type": "integer" },
+                      "clientId": { "type": "integer" },
+                      "price": { "type": "number" },
+                      "createdAt": { "type": "string", "format": "date-time" }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }

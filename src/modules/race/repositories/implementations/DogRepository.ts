@@ -1,29 +1,11 @@
 import { ICreateDog } from "@modules/dogs/dtos/ICreateDog";
 import { Dog } from "@modules/dogs/models/Dog";
-import { IDogRepository } from "../IDogRepository";
+import { IDogRepository } from "../IRaceRepository";
 import { prismaClient } from "database";
 import { IListDog } from "@modules/dogs/dtos/IListDog";
 import { IUpdateDog } from "@modules/dogs/dtos/IUpdateDog";
 
 class DogRepository implements IDogRepository {
-  async save(dog: Dog): Promise<Dog> {
-  return await prismaClient.dog.update({
-    where: { id: dog.id },
-    data: {
-      name: dog.name,
-      commercialTypeId: dog.commercialTypeId,
-      dogSizeId: dog.dogSizeId,
-      raceId: dog.raceId,
-      birthDate: dog.birthDate,
-      sex: dog.sex,
-      status: dog.status,
-      photo: dog.photo,
-      price: dog.price,
-      updated_at: new Date(), 
-    },
-  });
-}
-
   async updateDog(data: IUpdateDog): Promise<Dog> {
     const {
       id,

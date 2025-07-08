@@ -18,7 +18,7 @@ class UpdateDogController {
       price,
     } = request.body;
 
-    const photo = request.file?.filename ?? undefined;
+    const photo = "";
 
     try {
       const updateDogUseCase = container.resolve(UpdateDogUseCase);

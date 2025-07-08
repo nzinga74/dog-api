@@ -1,0 +1,5 @@
+
+interface IRaceRepository {
+  
+}
+export { IRaceRepository };

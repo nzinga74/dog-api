@@ -30,6 +30,7 @@ class ListDogController {
         sex: sex ? (sex as DogSex) : undefined,
         status: status ? Number(status) : DogStatus.Disponivel,
       });
+      console.log("Dogs found:", dogs.length);
 
       return response.json({ data: dogs });
     } catch (error: any) {
