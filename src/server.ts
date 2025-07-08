@@ -7,12 +7,11 @@ import { routes } from "routes";
 import cors from "cors";
 import { NextFunction, Request, Response } from "express";
 import multer from "multer";
+import path from "path";
 
 const app = express();
 
 app.use(express.json());
-
-app.use("/static", express.static(__dirname + "/tmp"));
 
 app.use(
   cors({
@@ -22,11 +21,10 @@ app.use(
 );
 
 app.use("/api-docs", SwaggerUi.serve, SwaggerUi.setup(swaggerFile));
-app.use(routes);
 
-app.listen(3333, "0.0.0.0", () => {
-  console.log("Server started on port 3333");
-});
+app.use("/files", express.static(path.resolve(__dirname, "tmp"))); 
+
+app.use(routes);
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof multer.MulterError) {
@@ -39,4 +37,9 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   return res.status(500).json({
     message: "Internal server error",
   });
+});
+
+app.listen(3333, "0.0.0.0", () => {
+  console.log("Server started on port 3333");
+  console.log("Serving static files from:", path.resolve(__dirname, "tmp"));
 });
