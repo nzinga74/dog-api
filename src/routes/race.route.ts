@@ -7,11 +7,12 @@ import { UpdateDogController } from "@modules/dogs/useCases/UpdateDog/UpdateDogC
 import { Router } from "express";
 import multer from "multer";
 import uploadConfig from "@config/upload";
+import { ListRaceController } from "@modules/race/useCases/ListRace/ListRaceController";
 
 const raceRoutes = Router();
-const listRacesController = new ListDogController();
+const listRacesController = new ListRaceController();
 
-raceRoutes.get("/list/races", listRacesController.handle);
+raceRoutes.get("/list/races", (req, res) => listRacesController.handle(req, res));
 
 
 export { raceRoutes };

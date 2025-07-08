@@ -6,6 +6,8 @@ import { IAdoptionRepository } from "@modules/adoptions/repositories/IAdoptionRe
 import { AdoptionRepository } from "@modules/adoptions/repositories/implementations/AdoptionRepository";
 import { IDogRepository } from "@modules/dogs/repositories/IDogRepository";
 import { DogRepository } from "@modules/dogs/repositories/implementations/DogRepository";
+import { IRaceRepository } from "@modules/race/repositories/IRaceRepository";
+import { RaceRepository } from "@modules/race/repositories/implementations/RaceRepository";
 import { ISellRepository } from "@modules/sells/repositories/ISellRepository";
 import { SellRepository } from "@modules/sells/repositories/implementations/SellRepository";
 
@@ -27,4 +29,6 @@ container.registerSingleton<IAdoptionRepository>(
   "AdoptionRepository",
   AdoptionRepository
 );
+container.registerSingleton<IRaceRepository>("RaceRepository", RaceRepository);
+
 container.registerSingleton<ISellRepository>("SellRepository", SellRepository);
