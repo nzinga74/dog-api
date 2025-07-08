@@ -60,15 +60,15 @@ class DogRepository implements IDogRepository {
     status,
   }: IListDog): Promise<Dog[]> {
     return prismaClient.dog.findMany({
-      // where: {
-      //   commercialTypeId,
-      //   dogSizeId,
-      //   raceId,
-      //   sex,
-      //   status,
-      //   deleted_at: { equals: null },
-      //   price: { lte: minPrice, gte: maxPrice },
-      // },
+      where: {
+        // commercialTypeId,
+        // dogSizeId,
+        // raceId,
+        // sex,
+        // status,
+        deleted_at: { equals: null },
+        //price: { lte: minPrice, gte: maxPrice },
+      },
     });
   }
   async create({
