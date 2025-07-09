@@ -5,9 +5,9 @@ import { Client } from "@modules/accounts/models/Client";
 class ClientRepository implements IClientRepository {
   async list(eligibility: boolean): Promise<Client[]> {
     return await prismaClient.client.findMany({
-      where: {
-        eligibleAdoption: eligibility,
-      },
+      // where: {
+      //   eligibleAdoption: eligibility,
+      // },
     });
   }
   async updateClientApproval(
