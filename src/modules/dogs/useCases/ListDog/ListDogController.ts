@@ -30,9 +30,15 @@ class ListDogController {
         sex: sex ? (sex as DogSex) : undefined,
         status: status ? Number(status) : DogStatus.Disponivel,
       });
+      const baseUrl = process.env.APP_URL || "http://localhost:3333";
+      const dogsWithPhotoUrl = dogs.map(dog => ({
+        ...dog,
+        photo: dog.photo ? `${baseUrl}/files/${dog.photo}` : null
+      }));
+
       console.log("Dogs found:", dogs.length);
 
-      return response.json({ data: dogs });
+      return response.json({ data: dogsWithPhotoUrl });
     } catch (error: any) {
       return response.status(400).json({ message: error.message });
     }
